@@ -100,6 +100,8 @@ final class HapticsDSLTests: XCTestCase {
                                 relativeTime: Self.defaultStartingAt + Self.defaultDelayBetweenEvents + 0.1 + Self.defaultDelayBetweenEvents + delayDuration)
         ]
         
+        print(generatedEvents.map(\.description))
+        print(expectedEvents.map(\.description))
         XCTAssertEqual(generatedEvents, expectedEvents)
     }
     
@@ -164,5 +166,32 @@ final class HapticsDSLTests: XCTestCase {
         ]
         
         XCTAssertEqual(generatedEvents, expectedEvents)
+    }
+    
+    func testEventEquality() {
+        for _ in 0...100 {
+            var newEvent: HapticEvent
+            let random = Int.random(in: 0...2)
+            switch random {
+            case 0:
+                let randomStartingTime = Bool.random() ? nil : TimeInterval.random(in: 0.1...100)
+                newEvent = TransientEvent(startingExactlyAt: randomStartingTime)
+            case 1:
+                let randomDuration = TimeInterval.random(in: 0.1...100)
+                let randomStartingTime = Bool.random() ? nil : TimeInterval.random(in: 0.1...100)
+                newEvent = ContinuousEvent(duration: randomDuration,
+                                           startingExactlyAt: randomStartingTime)
+            default:
+                let randomDuration = TimeInterval.random(in: 0.1...100)
+                newEvent = HapticDelay(duration: randomDuration)
+            }
+            let differentEvent = HapticEvent(eventType: newEvent.eventType,
+                                             duration: newEvent.duration,
+                                             specificTime: newEvent.specificTime)
+            differentEvent.duration += Double.random(in: 0.1...10)
+            differentEvent.specificTime? += Double.random(in: 0.1...10)
+            XCTAssertEqual(newEvent, newEvent)
+            XCTAssertNotEqual(newEvent, differentEvent)
+        }
     }
 }
