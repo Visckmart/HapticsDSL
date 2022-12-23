@@ -21,12 +21,9 @@ extension CHHapticPattern {
         for pattern in patterns {
             let (completeEvents, lastEventEnd) = pattern.generateHapticEventsTimeline(startingAt: currentTime)
             for completeEvent in completeEvents {
-                guard let eventType = completeEvent.eventType else { continue }
-                let realHapticEvent = CHHapticEvent(eventType: eventType,
-                                                    parameters: [],
-                                                    relativeTime: completeEvent.relativeTime,
-                                                    duration: completeEvent.duration)
-                finalHapticEvents.append(realHapticEvent)
+                if let realHapticEvent = CHHapticEvent(completeEvent) {
+                    finalHapticEvents.append(realHapticEvent)
+                }
             }
             currentTime = lastEventEnd + delayBetweenPatterns
         }

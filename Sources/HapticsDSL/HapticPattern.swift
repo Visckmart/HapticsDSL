@@ -72,13 +72,16 @@ public class CompleteHapticEvent {
         self.duration = duration
         self.relativeTime = relativeTime
     }
-    
-    public func generateRealHapticEvent() -> CHHapticEvent? {
-        guard let eventType = self.eventType else { return nil }
-        return CHHapticEvent(eventType: eventType,
-                             parameters: [],
-                             relativeTime: relativeTime,
-                             duration: duration)
+}
+
+
+extension CHHapticEvent {
+    convenience init?(_ completeHapticEvent: CompleteHapticEvent) {
+        guard let eventType = completeHapticEvent.eventType else { return nil }
+        self.init(eventType: eventType,
+                  parameters: [],
+                  relativeTime: completeHapticEvent.relativeTime,
+                  duration: completeHapticEvent.duration)
     }
 }
 
