@@ -6,10 +6,6 @@ An easy-to-use domain-specific language to build haptic patterns from Core Hapti
 
 The Core Haptics framework allows you to "Compose and play haptic patterns to customize your iOS app’s haptic feedback.". These patterns consist of sequences of haptic events. The HapticsDSL framework allows the easy of these patterns. For example:
 ```swift
-/// This pattern is made of a very quick vibration, followed by one
-/// that lasts 1 second, followed by another very quick vibration.
-///
-/// There is also a specified delay of 0.1 s between each vibration. 
 let pattern = HapticPattern(delayBetweenEvents: 0.1) {
     TransientEvent()
     ContinuousEvent(duration: 1)
@@ -21,6 +17,10 @@ let pattern = HapticPattern(delayBetweenEvents: 0.1) {
 let coreHapticsPattern = try CHHapticPattern(fromPatternSequence: [pattern])
 // play the pattern...
 ```
+
+This pattern is made of a very quick vibration, followed by one that lasts 1 second, followed by another very quick vibration.
+
+There’s also a specified delay of 0.1 s between each vibration. 
 
 To learn how to play a `CHHapticPattern` visit the [Core Haptics documentation](https://developer.apple.com/documentation/corehaptics).
 
@@ -62,6 +62,8 @@ This framework comes with a helper module called `HapticsDSLUI`. It consists of 
 
 ```swift
 import SwiftUI
+
+// ...
 
 let (hapticEvents, lastEventTime) = pattern.generateHapticEventsTimeline(startingAt: 0)
 HapticsTimelineView(hapticEvents: hapticEvents,
