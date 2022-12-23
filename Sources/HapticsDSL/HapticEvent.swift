@@ -24,14 +24,6 @@ open class HapticEvent {
     
 }
 
-extension HapticEvent: Equatable {
-    public static func == (lhs: HapticEvent, rhs: HapticEvent) -> Bool {
-        return lhs.eventType == rhs.eventType
-            && lhs.duration == rhs.duration
-            && lhs.specificTime == rhs.specificTime
-    }
-}
-
 open class TransientEvent: HapticEvent {
     
     public init(startingExactlyAt eventTime: TimeInterval? = nil) {
@@ -61,4 +53,12 @@ open class HapticDelay: HapticEvent {
                    specificTime: nil)
     }
     
+}
+
+extension HapticEvent: Equatable {
+    public static func == (lhs: HapticEvent, rhs: HapticEvent) -> Bool {
+        return lhs.eventType == rhs.eventType
+        && lhs.duration == rhs.duration
+        && lhs.specificTime == rhs.specificTime
+    }
 }

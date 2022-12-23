@@ -85,8 +85,30 @@ public class CompleteHapticEvent {
 extension CompleteHapticEvent: Equatable {
     public static func == (lhs: CompleteHapticEvent, rhs: CompleteHapticEvent) -> Bool {
         return lhs.eventType == rhs.eventType
-        && lhs.duration == rhs.duration
-        && lhs.relativeTime == rhs.relativeTime
-        && lhs.endTime == rhs.endTime
+        && lhs.duration.distance(to: rhs.duration) <= 0.0001
+        && lhs.relativeTime.distance(to: rhs.relativeTime) <= 0.0001
+        && lhs.endTime.distance(to: rhs.endTime) <= 0.0001
+    }
+}
+
+extension CompleteHapticEvent: CustomStringConvertible {
+    public var description: String {
+        let formattedEventType = self.eventType?.description ?? "delay"
+        let formattedRelativeTime = String(format: "%.3f", self.relativeTime)
+        let formattedEndTime = String(format: "%.3f", self.endTime)
+        let formattedDuration = String(format: "%.3f", self.duration)
+        return "\(formattedEventType) (\(formattedRelativeTime) -(\(formattedDuration))-> \(formattedEndTime))"
+    }
+}
+
+extension CHHapticEvent.EventType: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .hapticTransient:  return "hapticTransient"
+        case .hapticContinuous: return "hapticContinuous"
+        case .audioContinuous:  return "audioContinuous"
+        case .audioCustom:      return "audioCustom"
+        default:                return String(describing: self)
+        }
     }
 }
