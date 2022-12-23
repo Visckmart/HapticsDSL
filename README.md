@@ -1,5 +1,4 @@
 # HapticsDSL
-
 An easy-to-use domain-specific language to build haptic patterns from Core Haptics.
 
 ## Overview
@@ -95,3 +94,22 @@ HapticPattern(delayBetweenEvents: 0.1) {
     }
 }
 ```
+
+## Future Directions
+
+- Write more individual class, method and property documentations
+- Write more tests for the result builder
+- Make the structure more general in order to be able to build patterns with nested patterns or pattern sequences
+
+## Technologies
+
+This framework is fully developed using the [Swift programming language](https://swift.org/) using Xcode and is compatible with iOS 15 or later.
+
+It makes use of the [Result Builders](https://docs.swift.org/swift-book/LanguageGuide/AdvancedOperators.html#ID630) feature, which enables us to define new, declarative syntaxes inside the language.
+The patterns generated are intended to be used with the `Core Haptics` framework.
+
+The testing was made using the `XCTest` framework on Xcode.
+
+The module responsible for the UI (that helps visualize the patterns) was developed using the `SwiftUI` framework, a declarative UI framework built on top of those same Result Builders in Swift.
+
+The framework was built for distribution using a Swift Package. 
