@@ -5,11 +5,13 @@ import PackageDescription
 
 let package = Package(
     name: "HapticsDSL",
+    platforms: [.iOS(.v15)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "HapticsDSL",
             targets: ["HapticsDSL"]),
+        .library(name: "HapticsDSLUI", targets: ["HapticsDSLUI"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -21,6 +23,9 @@ let package = Package(
         .target(
             name: "HapticsDSL",
             dependencies: []),
+        .target(
+            name: "HapticsDSLUI",
+            dependencies: ["HapticsDSL"]),
         .testTarget(
             name: "HapticsDSLTests",
             dependencies: ["HapticsDSL"]),
